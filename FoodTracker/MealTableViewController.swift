@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import CoreData
 
 class MealTableViewController: UITableViewController {
     // MARK: Properties
@@ -16,7 +17,12 @@ class MealTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
-        loadSampleMeals()
+        let savedMeals = loadMeals()
+        if (savedMeals.count > 0) {
+            meals += savedMeals
+        } else {
+            loadSampleMeals()
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -65,6 +71,8 @@ class MealTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let meal = meals[indexPath.row]
+            meal.delete()
             // Delete the row from the data source
             meals.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -119,18 +127,43 @@ class MealTableViewController: UITableViewController {
         let photo1 = UIImage(named: "meal1")
         let photo2 = UIImage(named: "meal2")
         let photo3 = UIImage(named: "meal3")
-        
-        guard let meal1 = Meal.init(name: "Caprese Salad", photo: photo1, rating: 4) else {
+
+        guard let meal1 = Meal.init(name: "Caprese Salad", photo: photo1, rating: 4, model: nil) else {
             fatalError("Unable to initialize meal1")
         }
-        guard let meal2 = Meal.init(name: "Chicken and Potatoes", photo: photo2, rating: 5) else {
+        
+        guard let meal2 = Meal.init(name: "Chicken and Potatoes", photo: photo2, rating: 5, model: nil) else {
             fatalError("Unable to initialize meal2")
         }
-        guard let meal3 = Meal.init(name: "Pasta with Meatballs", photo: photo3, rating: 3) else {
+        guard let meal3 = Meal.init(name: "Pasta with Meatballs", photo: photo3, rating: 3, model: nil) else {
             fatalError("Unable to initialize meal3")
         }
         
         meals += [meal1, meal2, meal3]
+    }
+    private func loadMeals() -> [Meal] {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("failed to fetch Delegate")
+        }
+        let context = delegate.persistentContainer.viewContext
+        do {
+            let request: NSFetchRequest<MealModel> = MealModel.fetchRequest()
+            let mealModels = try context.fetch(request)
+            return mealModels.map {
+                guard let meal = Meal.init(
+                    name: $0.name ?? "",
+                    photo: $0.photo.flatMap { UIImage(data: $0) },
+                    rating: Int($0.rating),
+                    model: $0
+                    ) else {
+                        fatalError("Failed to initialize Meal")
+                }
+                return meal
+            }
+
+        } catch {
+            fatalError("Failed to load data")
+        }
     }
     
     // MARK: Actions

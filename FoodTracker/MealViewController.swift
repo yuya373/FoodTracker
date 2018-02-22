@@ -66,7 +66,18 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let photo = photoImageView.image
         let rating = ratingControl.rating
         
-        meal = Meal(name: name, photo: photo, rating: rating)
+        if let m = self.meal {
+            os_log("Updating Meal", log: OSLog.default, type: .debug)
+            m.name = name
+            m.photo = photo
+            m.rating = rating
+            m.save()
+        } else {
+            os_log("Creating Meal", log: OSLog.default, type: .debug)
+            meal = Meal(name: name, photo: photo, rating: rating, model: nil)
+            meal?.save()
+        }
+
     }
 
     // MARK: Actions
