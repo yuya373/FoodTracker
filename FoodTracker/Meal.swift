@@ -29,6 +29,9 @@ class Meal {
         }
     }
     var model: MealModel
+    // TODO
+    var date: String
+    var note: String
     
     // MARK: Initialization
     init?(name: String, photo: UIImage?, rating: Int, model: MealModel?) {
@@ -46,6 +49,8 @@ class Meal {
         self.name = name
         self.photo = photo
         self.rating = rating
+        self.date = "DATE"
+        self.note = "NOTE"
         
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("failed to fetch Delegate")
