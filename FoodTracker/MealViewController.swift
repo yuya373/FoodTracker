@@ -84,14 +84,35 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // ensure text field resign first responder (hide the keyboard).
         nameTextField.resignFirstResponder();
-        let imagePickerController = UIImagePickerController()
-        // imagePickerController.sourceType = .savedPhotosAlbum
-        // imagePickerController.sourceType = .camera
-        // imagePickerController.showsCameraControls = true
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.allowsEditing = true
-        imagePickerController.delegate = self
-        self.present(imagePickerController, animated: true, completion: nil)
+        
+        let alert = UIAlertController(title: "Select Image Source", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in })
+        alert.addAction(cancelAction)
+        
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .camera
+                imagePickerController.showsCameraControls = true
+                imagePickerController.allowsEditing = true
+                imagePickerController.delegate = self
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+            alert.addAction(cameraAction)
+        }
+        
+        if (UIImagePickerController.isSourceTypeAvailable(.photoLibrary)) {
+            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.sourceType = .photoLibrary
+                imagePickerController.allowsEditing = true
+                imagePickerController.delegate = self
+                self.present(imagePickerController, animated: true, completion: nil)
+            }
+            alert.addAction(photoLibraryAction)
+        }
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -101,6 +122,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // The info dictionary may contain multiple representations of the image. You want to use the original
+        // UIImagePickerControllerEditedImage needs UIImagePickerController#allowsEditing = true
         guard let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided following \(info)")
         }
