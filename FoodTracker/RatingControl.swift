@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 @IBDesignable class RatingControl: UIStackView {
     // MARK: Properties
@@ -40,9 +41,34 @@ import UIKit
         super.init(coder: coder)
         setupButtons()
     }
-    
+
     // MARK: Button Action
+    @objc func ratingButtonTapCanceled(button: UIButton) {
+        os_log("TouchUpOutside", log: OSLog.default, type: .debug)
+        guard let index = ratingButtons.index(of: button) else {
+            fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
+        }
+        for (i, button) in ratingButtons.enumerated() {
+            if (i <= index) {
+                button.isHighlighted = false
+            }
+        }
+    }
+    @objc func ratingButtonTap(button: UIButton) {
+        os_log("TouchDown", log: OSLog.default, type: .debug)
+        
+        guard let index = ratingButtons.index(of: button) else {
+            fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
+        }
+        for (i, button) in ratingButtons.enumerated() {
+            if (i <= index) {
+                button.isHighlighted = true
+            }
+        }
+    }
     @objc func ratingButtonTapped(button: UIButton) {
+        os_log("TouchUpInside", log: OSLog.default, type: .debug)
+        
         guard let index = ratingButtons.index(of: button) else {
             fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
         }
@@ -58,7 +84,8 @@ import UIKit
     private func updateButtonSelectionStates() {
         for (index, button) in ratingButtons.enumerated() {
             button.isSelected = (index < rating)
-            
+            button.isHighlighted = false
+
             let hintString: String?
             if (rating == index + 1) {
                 hintString = "Tap to reset the rating to zero."
@@ -111,6 +138,8 @@ import UIKit
             button.accessibilityLabel = "Set \(index + 1) star rating."
             
             button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(RatingControl.ratingButtonTap(button:)), for: .touchDown)
+            button.addTarget(self, action: #selector(RatingControl.ratingButtonTapCanceled(button:)), for: .touchUpOutside)
             
             // Add the button to stack
             addArrangedSubview(button)
