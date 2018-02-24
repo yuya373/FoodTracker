@@ -12,9 +12,22 @@ import CoreData
 
 class Meal {
     // MARK: Properties
-    var name: String
-    var photo: UIImage?
-    var rating: Int
+    var name: String {
+        didSet {
+            os_log("didSet [Name]", log: OSLog.default, type: .debug)
+            updateModelName()
+        }
+    }
+    var photo: UIImage? {
+        didSet {
+            updateModelPhoto()
+        }
+    }
+    var rating: Int {
+        didSet {
+            updateModelRating()
+        }
+    }
     var model: MealModel
     
     // MARK: Initialization
@@ -29,6 +42,7 @@ class Meal {
             return nil
         }
         
+        os_log("init [Name]", log: OSLog.default, type: .debug)
         self.name = name
         self.photo = photo
         self.rating = rating
@@ -36,18 +50,12 @@ class Meal {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("failed to fetch Delegate")
         }
+        
         self.model = model ?? MealModel(context: delegate.persistentContainer.viewContext)
-        save()
+        initModel()
     }
 
-    func save() {
-        let m = self.model
-        m.name = name
-        photo.map {
-            m.photo = UIImagePNGRepresentation($0)
-        }
-        m.rating = Int16(rating)
-     }
+    // MARK: Update MealModel
     
     func delete() {
         let m = model
@@ -56,5 +64,25 @@ class Meal {
         }
         let context = delegate.persistentContainer.viewContext
         context.delete(m)
+    }
+    
+    private func updateModelName() {
+        self.model.name = name
+    }
+    
+    private func updateModelRating() {
+        self.model.rating = Int16(rating)
+    }
+    
+    private func updateModelPhoto() {
+        self.photo.map {
+            self.model.photo = UIImagePNGRepresentation($0)
+        }
+    }
+    
+    private func initModel() {
+        updateModelName()
+        updateModelRating()
+        updateModelPhoto()
     }
 }

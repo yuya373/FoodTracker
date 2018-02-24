@@ -71,11 +71,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             m.name = name
             m.photo = photo
             m.rating = rating
-            m.save()
         } else {
             os_log("Creating Meal", log: OSLog.default, type: .debug)
             meal = Meal(name: name, photo: photo, rating: rating, model: nil)
-            meal?.save()
         }
 
     }
