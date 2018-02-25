@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -78,20 +77,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="GkW-XP-0B8">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkW-XP-0B8">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zsi-sl-ZaJ">
-                                        <rect key="frame" x="27" y="37" width="320" height="416"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-c5-fBO">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="416.66666666666669"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cZw-ok-lHN">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                                                <rect key="frame" x="24" y="0.0" width="327" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="LcU-f7-Qo5">
-                                                <rect key="frame" x="0.0" y="44" width="320" height="320"/>
+                                                <rect key="frame" x="24" y="38" width="327" height="326.66666666666669"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="LcU-f7-Qo5" secondAttribute="height" multiplier="1:1" id="wny-IP-axh"/>
@@ -101,34 +100,41 @@
                                                 </connections>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s10-ic-HYA" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
-                                                <rect key="frame" x="34" y="372" width="252" height="44"/>
+                                                <rect key="frame" x="61.333333333333329" y="372.66666666666669" width="252.33333333333337" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="252" id="iU5-Ie-oO2"/>
+                                                    <constraint firstAttribute="height" constant="44" id="pbw-KR-G1P"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="s10-ic-HYA" firstAttribute="leading" secondItem="zsi-sl-ZaJ" secondAttribute="leading" constant="34" id="JjL-2y-gP0"/>
-                                            <constraint firstAttribute="height" constant="416" id="aWS-dp-HBB"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="cZw-ok-lHN" secondAttribute="trailing" id="ihU-4c-d71"/>
-                                            <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="zsi-sl-ZaJ" secondAttribute="leading" id="kui-qc-Ah5"/>
-                                            <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="zsi-sl-ZaJ" secondAttribute="leadingMargin" id="tzD-wd-uzG"/>
+                                            <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="1Ch-aX-5GW"/>
+                                            <constraint firstAttribute="trailing" secondItem="cZw-ok-lHN" secondAttribute="trailing" constant="24" id="21B-XP-Q0n"/>
+                                            <constraint firstItem="cZw-ok-lHN" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="7TB-6L-wW1"/>
+                                            <constraint firstItem="cZw-ok-lHN" firstAttribute="top" secondItem="cKN-c5-fBO" secondAttribute="top" id="apP-Ot-fLp"/>
+                                            <constraint firstAttribute="trailing" secondItem="LcU-f7-Qo5" secondAttribute="trailing" constant="24" id="ki5-f5-uV2"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="zsi-sl-ZaJ" secondAttribute="bottom" constant="237" id="LoM-ng-fVc"/>
-                                    <constraint firstAttribute="trailing" secondItem="zsi-sl-ZaJ" secondAttribute="trailing" constant="28" id="Riu-BS-4yH"/>
-                                    <constraint firstItem="zsi-sl-ZaJ" firstAttribute="centerX" secondItem="GkW-XP-0B8" secondAttribute="centerX" id="V8F-4L-tfX"/>
-                                    <constraint firstItem="zsi-sl-ZaJ" firstAttribute="top" secondItem="GkW-XP-0B8" secondAttribute="top" constant="37" id="nit-1V-HTO"/>
+                                    <constraint firstItem="cKN-c5-fBO" firstAttribute="leading" secondItem="GkW-XP-0B8" secondAttribute="leading" id="4Wo-7M-XIy"/>
+                                    <constraint firstAttribute="bottom" secondItem="cKN-c5-fBO" secondAttribute="bottom" constant="210.33333333333331" id="HGh-Bp-i0H"/>
+                                    <constraint firstItem="cKN-c5-fBO" firstAttribute="top" secondItem="GkW-XP-0B8" secondAttribute="top" constant="8" id="Sc2-OB-Tcm"/>
+                                    <constraint firstAttribute="trailing" secondItem="cKN-c5-fBO" secondAttribute="trailing" id="iMh-2O-P58"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="GkW-XP-0B8" firstAttribute="bottom" secondItem="l4N-bf-GWl" secondAttribute="bottom" id="OOv-LJ-TBb"/>
-                            <constraint firstItem="l4N-bf-GWl" firstAttribute="trailing" secondItem="GkW-XP-0B8" secondAttribute="trailing" id="W8q-g0-FY5"/>
-                            <constraint firstItem="GkW-XP-0B8" firstAttribute="top" secondItem="l4N-bf-GWl" secondAttribute="top" id="Zpg-Y6-9IT"/>
-                            <constraint firstItem="GkW-XP-0B8" firstAttribute="leading" secondItem="l4N-bf-GWl" secondAttribute="leading" id="s3a-D8-jXP"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="bottom" secondItem="vZO-va-3ks" secondAttribute="bottom" id="1bI-oT-jMK"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="top" secondItem="vZO-va-3ks" secondAttribute="top" id="2yN-DJ-Zfu"/>
+                            <constraint firstItem="cKN-c5-fBO" firstAttribute="width" secondItem="vZO-va-3ks" secondAttribute="width" id="Hwx-6C-xNd"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="height" secondItem="vZO-va-3ks" secondAttribute="height" id="IQq-4i-xkt"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="width" secondItem="vZO-va-3ks" secondAttribute="width" id="Jts-h7-niF"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="leading" secondItem="vZO-va-3ks" secondAttribute="leading" id="TLn-kk-F0x"/>
+                            <constraint firstItem="GkW-XP-0B8" firstAttribute="trailing" secondItem="vZO-va-3ks" secondAttribute="trailing" id="j5W-VF-LRU"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="l4N-bf-GWl"/>
+                        <viewLayoutGuide key="safeArea" id="vZO-va-3ks"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Meal" id="7Ww-Qg-JOb">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="PM5-62-Clu">
