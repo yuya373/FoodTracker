@@ -29,12 +29,17 @@ class Meal {
         }
     }
     var model: MealModel
+    var dateTime: Date? {
+        didSet {
+            os_log("didSet [dateTime]", log: OSLog.default, type: .debug)
+            updateModelDateTime()
+        }
+    }
     // TODO
-    var date: String
     var note: String
     
     // MARK: Initialization
-    init?(name: String, photo: UIImage?, rating: Int, model: MealModel?) {
+    init?(name: String, photo: UIImage?, rating: Int, dateTime: Date?, model: MealModel?) {
         guard !name.isEmpty else {
             // need initializer failable (init? || init!)
             // ? return optional value
@@ -49,7 +54,7 @@ class Meal {
         self.name = name
         self.photo = photo
         self.rating = rating
-        self.date = "DATE"
+        self.dateTime = dateTime
         self.note = "NOTE"
         
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -85,9 +90,14 @@ class Meal {
         }
     }
     
+    private func updateModelDateTime() {
+        self.model.dateTime = self.dateTime
+    }
+    
     private func initModel() {
         updateModelName()
         updateModelRating()
         updateModelPhoto()
+        updateModelDateTime()
     }
 }

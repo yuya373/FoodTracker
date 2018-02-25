@@ -81,7 +81,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-c5-fBO">
-                                        <rect key="frame" x="0.0" y="8" width="375" height="416.66666666666669"/>
+                                        <rect key="frame" x="0.0" y="8" width="375" height="454.66666666666669"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cZw-ok-lHN">
                                                 <rect key="frame" x="24" y="0.0" width="327" height="30"/>
@@ -100,19 +100,29 @@
                                                 </connections>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s10-ic-HYA" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
-                                                <rect key="frame" x="61.333333333333329" y="372.66666666666669" width="252.33333333333337" height="44"/>
+                                                <rect key="frame" x="61.666666666666657" y="372.66666666666669" width="251.99999999999997" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="252" id="iU5-Ie-oO2"/>
                                                     <constraint firstAttribute="height" constant="44" id="pbw-KR-G1P"/>
                                                 </constraints>
                                             </stackView>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Set date and time" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g8S-mc-B5k">
+                                                <rect key="frame" x="24" y="424.66666666666663" width="327" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="dateTimeTextFieldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="VRz-u2-kDE"/>
+                                                </connections>
+                                            </textField>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="1Ch-aX-5GW"/>
                                             <constraint firstAttribute="trailing" secondItem="cZw-ok-lHN" secondAttribute="trailing" constant="24" id="21B-XP-Q0n"/>
                                             <constraint firstItem="cZw-ok-lHN" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="7TB-6L-wW1"/>
                                             <constraint firstItem="cZw-ok-lHN" firstAttribute="top" secondItem="cKN-c5-fBO" secondAttribute="top" id="apP-Ot-fLp"/>
+                                            <constraint firstItem="g8S-mc-B5k" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="gBA-S9-lcc"/>
                                             <constraint firstAttribute="trailing" secondItem="LcU-f7-Qo5" secondAttribute="trailing" constant="24" id="ki5-f5-uV2"/>
+                                            <constraint firstAttribute="trailing" secondItem="g8S-mc-B5k" secondAttribute="trailing" constant="24" id="pFO-lh-hik"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -149,6 +159,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateTimeTextField" destination="g8S-mc-B5k" id="o1K-M5-Zjy"/>
                         <outlet property="nameTextField" destination="cZw-ok-lHN" id="yLo-D6-y5d"/>
                         <outlet property="photoImageView" destination="LcU-f7-Qo5" id="HNT-iY-lUy"/>
                         <outlet property="ratingControl" destination="s10-ic-HYA" id="zWI-GL-lbw"/>
