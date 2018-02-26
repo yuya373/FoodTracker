@@ -128,14 +128,14 @@ class MealTableViewController: UITableViewController {
         let photo2 = UIImage(named: "meal2")
         let photo3 = UIImage(named: "meal3")
 
-        guard let meal1 = Meal.init(name: "Caprese Salad", photo: photo1, rating: 4, dateTime: nil, model: nil) else {
+        guard let meal1 = Meal.init(name: "Caprese Salad", photo: photo1, rating: 4, dateTime: nil, note: nil, model: nil) else {
             fatalError("Unable to initialize meal1")
         }
         
-        guard let meal2 = Meal.init(name: "Chicken and Potatoes", photo: photo2, rating: 5, dateTime: nil, model: nil) else {
+        guard let meal2 = Meal.init(name: "Chicken and Potatoes", photo: photo2, rating: 5, dateTime: nil, note: nil, model: nil) else {
             fatalError("Unable to initialize meal2")
         }
-        guard let meal3 = Meal.init(name: "Pasta with Meatballs", photo: photo3, rating: 3, dateTime: nil, model: nil) else {
+        guard let meal3 = Meal.init(name: "Pasta with Meatballs", photo: photo3, rating: 3, dateTime: nil, note: nil, model: nil) else {
             fatalError("Unable to initialize meal3")
         }
         
@@ -155,6 +155,7 @@ class MealTableViewController: UITableViewController {
                     photo: $0.photo.flatMap { UIImage(data: $0) },
                     rating: Int($0.rating),
                     dateTime: $0.dateTime,
+                    note: $0.note,
                     model: $0
                     ) else {
                         fatalError("Failed to initialize Meal")

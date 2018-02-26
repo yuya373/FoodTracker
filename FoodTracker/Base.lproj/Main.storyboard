@@ -81,7 +81,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-c5-fBO">
-                                        <rect key="frame" x="0.0" y="8" width="375" height="454.66666666666669"/>
+                                        <rect key="frame" x="0.0" y="8" width="375" height="615.33333333333337"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cZw-ok-lHN">
                                                 <rect key="frame" x="24" y="0.0" width="327" height="30"/>
@@ -90,7 +90,7 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="LcU-f7-Qo5">
-                                                <rect key="frame" x="24" y="38" width="327" height="326.66666666666669"/>
+                                                <rect key="frame" x="24" y="38" width="327" height="327"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="LcU-f7-Qo5" secondAttribute="height" multiplier="1:1" id="wny-IP-axh"/>
@@ -100,13 +100,13 @@
                                                 </connections>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s10-ic-HYA" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
-                                                <rect key="frame" x="61.666666666666657" y="372.66666666666669" width="251.99999999999997" height="44"/>
+                                                <rect key="frame" x="61.666666666666657" y="373" width="251.99999999999997" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="pbw-KR-G1P"/>
                                                 </constraints>
                                             </stackView>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Set date and time" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g8S-mc-B5k">
-                                                <rect key="frame" x="24" y="424.66666666666663" width="327" height="30"/>
+                                                <rect key="frame" x="24" y="425" width="327" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -114,24 +114,56 @@
                                                     <action selector="dateTimeTextFieldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="VRz-u2-kDE"/>
                                                 </connections>
                                             </textField>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="vmg-WP-OO6">
+                                                <rect key="frame" x="24" y="462.99999999999994" width="327" height="152.33333333333331"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7d-rX-RTa">
+                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gDP-i6-CLO">
+                                                        <rect key="frame" x="0.0" y="24.333333333333371" width="327" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" id="z3B-eN-wYB"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="gDP-i6-CLO" secondAttribute="trailing" id="9Av-9e-8lM"/>
+                                                    <constraint firstAttribute="trailing" secondItem="o7d-rX-RTa" secondAttribute="trailing" id="b2W-Wk-sLf"/>
+                                                    <constraint firstItem="gDP-i6-CLO" firstAttribute="leading" secondItem="vmg-WP-OO6" secondAttribute="leading" id="bYs-uh-nEJ"/>
+                                                    <constraint firstItem="o7d-rX-RTa" firstAttribute="leading" secondItem="vmg-WP-OO6" secondAttribute="leading" id="qvQ-I3-5XO"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="1Ch-aX-5GW"/>
                                             <constraint firstAttribute="trailing" secondItem="cZw-ok-lHN" secondAttribute="trailing" constant="24" id="21B-XP-Q0n"/>
                                             <constraint firstItem="cZw-ok-lHN" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="7TB-6L-wW1"/>
-                                            <constraint firstItem="cZw-ok-lHN" firstAttribute="top" secondItem="cKN-c5-fBO" secondAttribute="top" id="apP-Ot-fLp"/>
+                                            <constraint firstAttribute="trailing" secondItem="vmg-WP-OO6" secondAttribute="trailing" constant="24" id="VL4-M6-kM9"/>
+                                            <constraint firstItem="vmg-WP-OO6" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="dsy-KJ-xrv"/>
                                             <constraint firstItem="g8S-mc-B5k" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="gBA-S9-lcc"/>
                                             <constraint firstAttribute="trailing" secondItem="LcU-f7-Qo5" secondAttribute="trailing" constant="24" id="ki5-f5-uV2"/>
                                             <constraint firstAttribute="trailing" secondItem="g8S-mc-B5k" secondAttribute="trailing" constant="24" id="pFO-lh-hik"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="cKN-c5-fBO" firstAttribute="leading" secondItem="GkW-XP-0B8" secondAttribute="leading" id="4Wo-7M-XIy"/>
-                                    <constraint firstAttribute="bottom" secondItem="cKN-c5-fBO" secondAttribute="bottom" constant="210.33333333333331" id="HGh-Bp-i0H"/>
-                                    <constraint firstItem="cKN-c5-fBO" firstAttribute="top" secondItem="GkW-XP-0B8" secondAttribute="top" constant="8" id="Sc2-OB-Tcm"/>
+                                    <constraint firstAttribute="bottom" secondItem="cKN-c5-fBO" secondAttribute="bottom" constant="91.329999999999998" id="EcH-3L-QJs"/>
+                                    <constraint firstItem="cKN-c5-fBO" firstAttribute="top" secondItem="GkW-XP-0B8" secondAttribute="top" constant="8" id="GNC-97-whz"/>
                                     <constraint firstAttribute="trailing" secondItem="cKN-c5-fBO" secondAttribute="trailing" id="iMh-2O-P58"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bKY-qJ-afb" appends="YES" id="NNK-5z-G9N"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -161,6 +193,7 @@
                     <connections>
                         <outlet property="dateTimeTextField" destination="g8S-mc-B5k" id="o1K-M5-Zjy"/>
                         <outlet property="nameTextField" destination="cZw-ok-lHN" id="yLo-D6-y5d"/>
+                        <outlet property="noteTextView" destination="gDP-i6-CLO" id="ghU-s0-qDc"/>
                         <outlet property="photoImageView" destination="LcU-f7-Qo5" id="HNT-iY-lUy"/>
                         <outlet property="ratingControl" destination="s10-ic-HYA" id="zWI-GL-lbw"/>
                         <outlet property="saveButton" destination="bFl-SP-Wdf" id="QBN-R6-9ec"/>
@@ -171,6 +204,11 @@
                 <tapGestureRecognizer id="MQh-sL-aWi">
                     <connections>
                         <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="B6r-b2-c8y"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="bKY-qJ-afb">
+                    <connections>
+                        <action selector="cancelNoteEditing:" destination="BYZ-38-t0r" id="mXk-dc-pnG"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

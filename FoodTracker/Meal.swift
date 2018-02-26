@@ -36,10 +36,14 @@ class Meal {
         }
     }
     // TODO
-    var note: String
+    var note: String? {
+        didSet {
+            updateModelNote()
+        }
+    }
     
     // MARK: Initialization
-    init?(name: String, photo: UIImage?, rating: Int, dateTime: Date?, model: MealModel?) {
+    init?(name: String, photo: UIImage?, rating: Int, dateTime: Date?, note: String?, model: MealModel?) {
         guard !name.isEmpty else {
             // need initializer failable (init? || init!)
             // ? return optional value
@@ -55,7 +59,7 @@ class Meal {
         self.photo = photo
         self.rating = rating
         self.dateTime = dateTime
-        self.note = "NOTE"
+        self.note = note
         
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("failed to fetch Delegate")
@@ -94,10 +98,15 @@ class Meal {
         self.model.dateTime = self.dateTime
     }
     
+    private func updateModelNote() {
+        self.model.note = self.note
+    }
+    
     private func initModel() {
         updateModelName()
         updateModelRating()
         updateModelPhoto()
         updateModelDateTime()
+        updateModelNote()
     }
 }

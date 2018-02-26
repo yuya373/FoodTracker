@@ -16,7 +16,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var dateTimeTextField: UITextField!
-    
+    @IBOutlet weak var noteTextView: UITextView!
     /*
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
      or constructed as part of adding a new meal.
@@ -29,6 +29,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Handle the text field’s user input through delegate callbacks
         nameTextField.delegate = self
 
+        let color = UIColor(red: 186/255, green: 186/255, blue: 186/255, alpha: 1.0).cgColor
+        noteTextView.layer.borderColor = color
+        noteTextView.layer.borderWidth = 0.5
+        noteTextView.layer.cornerRadius = 5.0
         if let meal = self.meal {
             nameTextField.text = meal.name
             photoImageView.image = meal.photo
@@ -36,9 +40,20 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             dateTimeTextField.text = meal.dateTime.map {
                 formatDateTime(dateTime: $0)
             }
+            noteTextView.text = meal.note
         }
         
         updateSaveButtonState()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        registerObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserver()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +85,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
-        
+        let note = noteTextView.text.count > 255 ? String(noteTextView.text.prefix(255)) : noteTextView.text
         if let m = self.meal {
             os_log("Updating Meal", log: OSLog.default, type: .debug)
             m.name = name
@@ -79,15 +94,23 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             m.dateTime = dateTimeTextField.text.flatMap {
                 dateFormatter().date(from: $0)
             } ?? nil
+            m.note = note
         } else {
             os_log("Creating Meal", log: OSLog.default, type: .debug)
             let dateTime = dateTimeTextField.text.flatMap({ dateFormatter().date(from: $0) })
-            meal = Meal(name: name, photo: photo, rating: rating, dateTime: dateTime, model: nil)
+            meal = Meal(name: name, photo: photo, rating: rating, dateTime: dateTime, note: note, model: nil)
         }
 
     }
 
     // MARK: Actions
+    @IBAction func cancelNoteEditing(_ sender: UITapGestureRecognizer) {
+        os_log("cancelNoteEditing", log: OSLog.default, type: .debug)
+        if (noteTextView.isFirstResponder) {
+            noteTextView.resignFirstResponder()
+        }
+    }
+    
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // ensure text field resign first responder (hide the keyboard).
         nameTextField.resignFirstResponder();
@@ -121,19 +144,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    private func dateFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "ja_JP")
-        return formatter
-    }
-    
-    private func formatDateTime(dateTime: Date) -> String {
-        return dateFormatter().string(from: dateTime)
-    }
-    
+
     @objc func dateTimeValueChanged(datePicker: UIDatePicker) {
         dateTimeTextField.text = formatDateTime(dateTime: datePicker.date)
     }
@@ -206,6 +217,53 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func updateSaveButtonState() {
         let text = nameTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty
+    }
+    
+    private func dateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "ja_JP")
+        return formatter
+    }
+    
+    private func formatDateTime(dateTime: Date) -> String {
+        return dateFormatter().string(from: dateTime)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if (!noteTextView.isFirstResponder) {
+            return
+        }
+        if let rect = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSValue) as? Double {
+            UIView.animate(withDuration: duration, animations: {
+                let transform = CGAffineTransform(translationX: 0, y: -rect.size.height)
+                self.view.transform = transform
+            })
+        }
+    }
+    
+    @objc func keyborardWillHide(notification: Notification) {
+        if (!noteTextView.isFirstResponder) {
+            return
+        }
+        if let duration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSValue) as? Double {
+            UIView.animate(withDuration: duration, animations: {
+                self.view.transform = CGAffineTransform.identity
+            })
+        }
+    }
+    
+    private func registerObserver() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(MealViewController.keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
+        notification.addObserver(self, selector: #selector(MealViewController.keyborardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    private func removeObserver() {
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
     }
 }
 
