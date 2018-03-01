@@ -52,6 +52,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         locationManager = CLLocationManager()
         locationManager.delegate = self
         
+        mapView.delegate = self
+        
         print("\(mapView.isUserLocationVisible), \(mapView.showsUserLocation)")
     }
     
@@ -317,6 +319,7 @@ extension MealViewController: CLLocationManagerDelegate {
                 let pin = MKPointAnnotation()
                 pin.coordinate = latest.coordinate
                 mapView.addAnnotation(pin)
+                os_log("add Annotation to mapView", log: OSLog.default, type: .debug)
                 self.pin = pin
                 mapView.showAnnotations(mapView.annotations, animated: true)
             }
@@ -328,5 +331,21 @@ extension MealViewController: CLLocationManagerDelegate {
         let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension MealViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        print(annotation)
+        if annotation is MKPointAnnotation {
+            let reuseId = "Pin"
+            let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) ??
+                MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView.annotation = annotation
+            pinView.isDraggable = true
+            return pinView
+        } else {
+            return nil
+        }
     }
 }

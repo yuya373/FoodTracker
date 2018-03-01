@@ -114,7 +114,7 @@
                                                     <action selector="dateTimeTextFieldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="VRz-u2-kDE"/>
                                                 </connections>
                                             </textField>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gXd-aw-rvs">
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gXd-aw-rvs">
                                                 <rect key="frame" x="24" y="463" width="327" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="YGN-Ej-Np2"/>
