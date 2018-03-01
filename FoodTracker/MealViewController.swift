@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import os.log
 
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -17,12 +18,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var dateTimeTextField: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet weak var mapView: MKMapView!
     /*
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
      or constructed as part of adding a new meal.
      */
     var meal: Meal?
     var datePicker: UIDatePicker!
+    var locationManager: CLLocationManager!
+    var pin: MKPointAnnotation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,11 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         }
         
         updateSaveButtonState()
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        print("\(mapView.isUserLocationVisible), \(mapView.showsUserLocation)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -267,3 +276,57 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
 }
 
+extension MealViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization();
+        case .denied:
+            let alert = UIAlertController(title: "Enable Location", message: "Settings -> Privacy -> Location", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: {action in
+                guard let url = URL(string: UIApplicationOpenSettingsURLString) else {
+                    fatalError("Can't get Settings url.")
+                }
+                if (UIApplication.shared.canOpenURL(url)) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            })
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancel)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+        case .restricted:
+            let alert = UIAlertController(title: "Location can't be use", message: "This device has GPS?", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+        case .authorizedAlways:
+            break;
+        case .authorizedWhenInUse:
+            locationManager.requestLocation()
+            break;
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locations.last.map {
+            latest in
+            mapView.setCenter(latest.coordinate, animated: true)
+            
+            if self.pin == nil {
+                let pin = MKPointAnnotation()
+                pin.coordinate = latest.coordinate
+                mapView.addAnnotation(pin)
+                self.pin = pin
+                mapView.showAnnotations(mapView.annotations, animated: true)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        let alert = UIAlertController(title: "Error in Location", message: error.localizedDescription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+}

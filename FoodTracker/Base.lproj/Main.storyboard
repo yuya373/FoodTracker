@@ -81,7 +81,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-c5-fBO">
-                                        <rect key="frame" x="0.0" y="8" width="375" height="615.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="8" width="375" height="751.33333333333337"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter meal name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cZw-ok-lHN">
                                                 <rect key="frame" x="24" y="0.0" width="327" height="30"/>
@@ -114,8 +114,14 @@
                                                     <action selector="dateTimeTextFieldEditingDidBegin:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="VRz-u2-kDE"/>
                                                 </connections>
                                             </textField>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gXd-aw-rvs">
+                                                <rect key="frame" x="24" y="463" width="327" height="128"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" id="YGN-Ej-Np2"/>
+                                                </constraints>
+                                            </mapView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="vmg-WP-OO6">
-                                                <rect key="frame" x="24" y="462.99999999999994" width="327" height="152.33333333333331"/>
+                                                <rect key="frame" x="24" y="599" width="327" height="152.33333333333337"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7d-rX-RTa">
                                                         <rect key="frame" x="0.0" y="0.0" width="327" height="20.333333333333332"/>
@@ -146,6 +152,8 @@
                                             <constraint firstItem="LcU-f7-Qo5" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="1Ch-aX-5GW"/>
                                             <constraint firstAttribute="trailing" secondItem="cZw-ok-lHN" secondAttribute="trailing" constant="24" id="21B-XP-Q0n"/>
                                             <constraint firstItem="cZw-ok-lHN" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="7TB-6L-wW1"/>
+                                            <constraint firstItem="gXd-aw-rvs" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="Ahv-iR-oyH"/>
+                                            <constraint firstAttribute="trailing" secondItem="gXd-aw-rvs" secondAttribute="trailing" constant="24" id="V0q-p5-Kso"/>
                                             <constraint firstAttribute="trailing" secondItem="vmg-WP-OO6" secondAttribute="trailing" constant="24" id="VL4-M6-kM9"/>
                                             <constraint firstItem="vmg-WP-OO6" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="dsy-KJ-xrv"/>
                                             <constraint firstItem="g8S-mc-B5k" firstAttribute="leading" secondItem="cKN-c5-fBO" secondAttribute="leading" constant="24" id="gBA-S9-lcc"/>
@@ -192,6 +200,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateTimeTextField" destination="g8S-mc-B5k" id="o1K-M5-Zjy"/>
+                        <outlet property="mapView" destination="gXd-aw-rvs" id="dFZ-5h-muc"/>
                         <outlet property="nameTextField" destination="cZw-ok-lHN" id="yLo-D6-y5d"/>
                         <outlet property="noteTextView" destination="gDP-i6-CLO" id="ghU-s0-qDc"/>
                         <outlet property="photoImageView" destination="LcU-f7-Qo5" id="HNT-iY-lUy"/>
