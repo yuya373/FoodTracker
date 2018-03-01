@@ -35,10 +35,19 @@ class Meal {
             updateModelDateTime()
         }
     }
-    // TODO
     var note: String? {
         didSet {
             updateModelNote()
+        }
+    }
+    var latitude: Double? {
+        didSet {
+            updateModelLatitude()
+        }
+    }
+    var longitude: Double? {
+        didSet {
+            updateModelLongitude()
         }
     }
     
@@ -60,7 +69,9 @@ class Meal {
         self.rating = rating
         self.dateTime = dateTime
         self.note = note
-        
+        self.longitude = model.map { $0.longitude }
+        self.latitude = model.map { $0.latitude }
+
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("failed to fetch Delegate")
         }
@@ -102,11 +113,21 @@ class Meal {
         self.model.note = self.note
     }
     
+    private func updateModelLatitude() {
+        self.model.latitude = self.latitude ?? 0.0
+    }
+    
+    private func updateModelLongitude() {
+        self.model.longitude = self.longitude ?? 0.0
+    }
+    
     private func initModel() {
         updateModelName()
         updateModelRating()
         updateModelPhoto()
         updateModelDateTime()
         updateModelNote()
+        updateModelLatitude()
+        updateModelLongitude()
     }
 }

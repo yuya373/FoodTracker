@@ -160,6 +160,8 @@ class MealTableViewController: UITableViewController {
                     ) else {
                         fatalError("Failed to initialize Meal")
                 }
+                meal.latitude = $0.latitude == 0.0 ? nil : $0.latitude
+                meal.longitude = $0.longitude == 0.0 ? nil : $0.longitude
                 return meal
             }
 

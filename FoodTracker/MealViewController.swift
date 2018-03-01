@@ -37,6 +37,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         noteTextView.layer.borderColor = color
         noteTextView.layer.borderWidth = 0.5
         noteTextView.layer.cornerRadius = 5.0
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        mapView.delegate = self
+        
         if let meal = self.meal {
             nameTextField.text = meal.name
             photoImageView.image = meal.photo
@@ -45,16 +51,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 formatDateTime(dateTime: $0)
             }
             noteTextView.text = meal.note
+            if let lat = meal.latitude, let lon = meal.longitude {
+                let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                displayPin(coord: coord)
+            }
         }
         
         updateSaveButtonState()
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        
-        mapView.delegate = self
-        
-        print("\(mapView.isUserLocationVisible), \(mapView.showsUserLocation)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,9 +112,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         } else {
             os_log("Creating Meal", log: OSLog.default, type: .debug)
             let dateTime = dateTimeTextField.text.flatMap({ dateFormatter().date(from: $0) })
-            meal = Meal(name: name, photo: photo, rating: rating, dateTime: dateTime, note: note, model: nil)
+            self.meal = Meal(name: name, photo: photo, rating: rating, dateTime: dateTime, note: note, model: nil)
         }
-
+        meal?.latitude = pin?.coordinate.latitude
+        meal?.longitude = pin?.coordinate.longitude
     }
 
     // MARK: Actions
@@ -309,19 +313,21 @@ extension MealViewController: CLLocationManagerDelegate {
             break;
         }
     }
+
+    func displayPin(coord: CLLocationCoordinate2D) {
+        let pin = MKPointAnnotation()
+        pin.coordinate = coord
+        self.pin = pin
+        mapView.addAnnotation(pin)
+        mapView.showAnnotations(mapView.annotations, animated: true)
+        mapView.setCenter(coord, animated: true)
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.last.map {
             latest in
-            mapView.setCenter(latest.coordinate, animated: true)
-            
             if self.pin == nil {
-                let pin = MKPointAnnotation()
-                pin.coordinate = latest.coordinate
-                mapView.addAnnotation(pin)
-                os_log("add Annotation to mapView", log: OSLog.default, type: .debug)
-                self.pin = pin
-                mapView.showAnnotations(mapView.annotations, animated: true)
+                displayPin(coord: latest.coordinate)
             }
         }
     }
@@ -336,7 +342,6 @@ extension MealViewController: CLLocationManagerDelegate {
 
 extension MealViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print(annotation)
         if annotation is MKPointAnnotation {
             let reuseId = "Pin"
             let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) ??
