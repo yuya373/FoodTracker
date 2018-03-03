@@ -167,12 +167,12 @@
         <!--Map-->
         <scene sceneID="jl3-v7-nMZ">
             <objects>
-                <viewController id="F2P-09-DXL" sceneMemberID="viewController">
+                <viewController id="F2P-09-DXL" customClass="MapViewController" customModule="FoodTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jAK-Kg-9Ca">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TB1-1K-59m">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TB1-1K-59m">
                                 <rect key="frame" x="0.0" y="44" width="375" height="685"/>
                             </mapView>
                         </subviews>
@@ -186,6 +186,9 @@
                         <viewLayoutGuide key="safeArea" id="abV-2D-nSZ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map Marker" id="oEW-tl-byG"/>
+                    <connections>
+                        <outlet property="mapView" destination="TB1-1K-59m" id="692-oR-kDs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEZ-ie-655" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

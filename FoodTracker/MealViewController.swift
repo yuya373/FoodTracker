@@ -289,33 +289,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
 extension MealViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization();
-        case .denied:
-            let alert = UIAlertController(title: "Enable Location", message: "Settings -> Privacy -> Location", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: {action in
-                guard let url = URL(string: UIApplicationOpenSettingsURLString) else {
-                    fatalError("Can't get Settings url.")
-                }
-                if (UIApplication.shared.canOpenURL(url)) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            })
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(cancel)
-            alert.addAction(ok)
-            present(alert, animated: true, completion: nil)
-        case .restricted:
-            let alert = UIAlertController(title: "Location can't be use", message: "This device has GPS?", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(ok)
-            present(alert, animated: true, completion: nil)
-        case .authorizedAlways:
-            break;
-        case .authorizedWhenInUse:
-            locationManager.requestLocation()
-            break;
+        let util = LocationManagerUtil(locationManager: locationManager)
+        util.handleChangeAuthorization(status: status, onAuthorized: nil).map {
+            present($0, animated: true, completion: nil)
         }
     }
 
@@ -337,9 +313,8 @@ extension MealViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        let alert = UIAlertController(title: "Error in Location", message: error.localizedDescription, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(ok)
+        let util = LocationManagerUtil(locationManager: locationManager)
+        let alert = util.handleFailWithError(error: error)
         present(alert, animated: true, completion: nil)
     }
 }

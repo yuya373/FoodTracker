@@ -81,32 +81,7 @@ class ListViewController: UIViewController {
     // MARK: - Private Methods
     
     private func loadMeals() -> [Meal] {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("failed to fetch Delegate")
-        }
-        let context = delegate.persistentContainer.viewContext
-        do {
-            let request: NSFetchRequest<MealModel> = MealModel.fetchRequest()
-            let mealModels = try context.fetch(request)
-            return mealModels.map {
-                guard let meal = Meal.init(
-                    name: $0.name ?? "",
-                    photo: $0.photo.flatMap { UIImage(data: $0) },
-                    rating: Int($0.rating),
-                    dateTime: $0.dateTime,
-                    note: $0.note,
-                    model: $0
-                    ) else {
-                        fatalError("Failed to initialize Meal")
-                }
-                meal.latitude = $0.latitude == 0.0 ? nil : $0.latitude
-                meal.longitude = $0.longitude == 0.0 ? nil : $0.longitude
-                return meal
-            }
-            
-        } catch {
-            fatalError("Failed to load data")
-        }
+        return Meal.load()
     }
     
     private func loadSampleMeals() {
