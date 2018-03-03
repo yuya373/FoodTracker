@@ -38,12 +38,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         noteTextView.layer.borderWidth = 0.5
         noteTextView.layer.cornerRadius = 5.0
         
+        mapView.delegate = self
         locationManager = CLLocationManager()
         locationManager.delegate = self
         
-        mapView.delegate = self
-        
+
         if let meal = self.meal {
+            navigationItem.title = meal.name
             nameTextField.text = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
@@ -78,13 +79,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     // MARK: Navigation
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways
-        let isPresentingInAddMealMode = presentingViewController is UINavigationController
-        if isPresentingInAddMealMode {
+        let isPresentingModally = presentingViewController is UITabBarController
+        if isPresentingModally {
             dismiss(animated: true, completion: nil)
-        } else if let owingNavigationController = navigationController {
-            owingNavigationController.popViewController(animated: true)
+        } else if let owingViewController = navigationController {
+            owingViewController.popViewController(animated: true)
         } else {
-            fatalError("The MealViewController is not inside a navigation controller")
+            fatalError("MealViewController is not inside a navigation controller.")
         }
     }
 
@@ -96,6 +97,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             return
         }
         
+        updateMeal()
+    }
+    
+    private func updateMeal() {
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
@@ -107,7 +112,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             m.rating = rating
             m.dateTime = dateTimeTextField.text.flatMap {
                 dateFormatter().date(from: $0)
-            } ?? nil
+                } ?? nil
             m.note = note
         } else {
             os_log("Creating Meal", log: OSLog.default, type: .debug)
@@ -315,19 +320,18 @@ extension MealViewController: CLLocationManagerDelegate {
     }
 
     func displayPin(coord: CLLocationCoordinate2D) {
-        let pin = MKPointAnnotation()
-        pin.coordinate = coord
-        self.pin = pin
-        mapView.addAnnotation(pin)
+        self.pin = MKPointAnnotation()
+        self.pin.map {
+            $0.coordinate = coord
+            mapView.addAnnotation($0)
+        }
         mapView.showAnnotations(mapView.annotations, animated: true)
-        mapView.setCenter(coord, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locations.last.map {
-            latest in
-            if self.pin == nil {
-                displayPin(coord: latest.coordinate)
+        if self.pin == nil {
+            locations.last.map {
+                displayPin(coord: $0.coordinate)
             }
         }
     }
