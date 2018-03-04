@@ -47,18 +47,6 @@ class ListViewController: UIViewController {
         switch (segue.identifier ?? "") {
         case "AddItem":
             os_log("Adding a new meal.", log: OSLog.default, type: .debug)
-        case "ShowDetail":
-            guard let mealDetailViewController = segue.destination as? MealViewController else {
-                fatalError("Unexpected destination: \(segue.destination)")
-            }
-            guard let selectedMealCell = sender as? MealTableViewCell else {
-                fatalError("Unexpected sender: \(sender ?? "nil")")
-            }
-            guard let indexPath = mealTableView.indexPath(for: selectedMealCell) else {
-                fatalError("The selected cell is not being displayed by the table")
-            }
-            let selectedMeal = meals[indexPath.row]
-            mealDetailViewController.meal = selectedMeal
         default:
             fatalError("Unexpected identifier: \(segue.identifier ?? "nil")")
         }
@@ -70,7 +58,9 @@ class ListViewController: UIViewController {
             if let selectedIndex = mealTableView.indexPathForSelectedRow {
                 meals[selectedIndex.row] = meal
                 mealTableView.reloadRows(at: [selectedIndex], with: .none)
+                mealTableView.deselectRow(at: selectedIndex, animated: true)
             } else {
+                print("No Meal!")
                 let newIndexPath = IndexPath(row: meals.count, section: 0)
                 meals.append(meal)
                 mealTableView.insertRows(at: [newIndexPath], with: .automatic)
@@ -143,5 +133,16 @@ extension ListViewController: UITableViewDataSource {
 }
 
 extension ListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let id = "MealViewController"
+        let mealViewController = storyboard.instantiateViewController(withIdentifier: id) as? MealViewController
+        let meal = meals[indexPath.row]
+        mealViewController.map {
+            $0.meal = meal
+            $0.hidesBottomBarWhenPushed = true
+            $0.navigationItem.leftBarButtonItem = nil
+            navigationController?.pushViewController($0, animated: true)
+        }
+    }
 }

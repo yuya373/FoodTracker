@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkW-XP-0B8">
-                                <rect key="frame" x="0.0" y="88" width="375" height="597"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cKN-c5-fBO">
                                         <rect key="frame" x="0.0" y="16" width="375" height="879.33333333333337"/>
@@ -321,7 +321,6 @@
                                             <outlet property="nameLabel" destination="bA0-dM-Fts" id="S2D-de-iSE"/>
                                             <outlet property="photoImageView" destination="BRI-lR-FlH" id="rEF-N0-QoQ"/>
                                             <outlet property="ratingControl" destination="wD4-jP-RpD" id="wJa-ra-4Tv"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="aZR-6T-3fh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -391,7 +390,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUa-FW-ui4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1228" y="418"/>
+            <point key="canvasLocation" x="1247" y="839"/>
         </scene>
         <!--List-->
         <scene sceneID="dE6-80-bEw">
@@ -455,7 +454,4 @@
         <image name="Map Marker" width="30" height="30"/>
         <image name="defaultPhoto" width="320" height="320"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="aZR-6T-3fh"/>
-    </inferredMetricsTieBreakers>
 </document>
