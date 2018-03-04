@@ -51,7 +51,11 @@ class Meal {
         }
     }
     
-    static func load() -> [Meal] {
+    static func fetchHasLocation() -> [Meal] {
+        return fetch().filter({ $0.latitude != nil && $0.longitude != nil })
+    }
+    
+    static func fetch() -> [Meal] {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("failed to fetch Delegate")
         }

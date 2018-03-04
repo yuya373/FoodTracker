@@ -352,10 +352,10 @@
             </objects>
             <point key="canvasLocation" x="257" y="839"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Meal Tab Bar View Controller-->
         <scene sceneID="1zI-s7-vJU">
             <objects>
-                <tabBarController id="swt-aJ-zh7" sceneMemberID="viewController">
+                <tabBarController id="swt-aJ-zh7" customClass="MealTabBarViewController" customModule="FoodTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tjq-lE-JI5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

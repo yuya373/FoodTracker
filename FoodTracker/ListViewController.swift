@@ -60,7 +60,6 @@ class ListViewController: UIViewController {
                 mealTableView.reloadRows(at: [selectedIndex], with: .none)
                 mealTableView.deselectRow(at: selectedIndex, animated: true)
             } else {
-                print("No Meal!")
                 let newIndexPath = IndexPath(row: meals.count, section: 0)
                 meals.append(meal)
                 mealTableView.insertRows(at: [newIndexPath], with: .automatic)
@@ -71,7 +70,7 @@ class ListViewController: UIViewController {
     // MARK: - Private Methods
     
     private func loadMeals() -> [Meal] {
-        return Meal.load()
+        return Meal.fetch()
     }
     
     private func loadSampleMeals() {

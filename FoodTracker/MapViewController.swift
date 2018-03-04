@@ -27,26 +27,27 @@ class MapViewController: UIViewController {
     var meals = [Meal]()
     var locationManager: CLLocationManager!
     var mapInitiallyLoaded = false
+    var shouldReloadPins = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        meals = Meal.load().filter({ $0.latitude != nil && $0.longitude != nil })
-        
+
         locationManager = CLLocationManager()
         locationManager.allowsBackgroundLocationUpdates = false
         locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.delegate = self
-        
         mapView.delegate = self
         
-
-        showMeals()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        if (shouldReloadPins) {
+            reloadPins()
+            shouldReloadPins = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +67,9 @@ class MapViewController: UIViewController {
     */
     
     // MARK: - Private Methods
-    private func showMeals() {
+    private func reloadPins() {
+        meals = Meal.fetchHasLocation()
+        mapView.removeAnnotations(mapView.annotations)
         let pins = meals.enumerated().map { (index, meal) -> MKPointAnnotation in
             let pin = MealPointAnnotation()
             pin.coordinate = CLLocationCoordinate2D(latitude: meal.latitude!, longitude: meal.longitude!)
