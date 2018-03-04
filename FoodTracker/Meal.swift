@@ -107,6 +107,16 @@ class Meal {
         self.model = model ?? MealModel(context: delegate.persistentContainer.viewContext)
         initModel()
     }
+    
+    func formattedDate() -> String? {
+        return self.dateTime.map { dateTime in
+            let formatter = DateFormatter()
+            formatter.dateStyle = .long
+            formatter.timeStyle = .short
+            formatter.locale = Locale(identifier: "ja_JP")
+            return formatter.string(from: dateTime)
+        }
+    }
 
     // MARK: Update MealModel
     

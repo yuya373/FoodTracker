@@ -27,6 +27,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     var datePicker: UIDatePicker!
     var locationManager: CLLocationManager!
     var pin: MKPointAnnotation?
+    var readOnly = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +49,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             nameTextField.text = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
-            dateTimeTextField.text = meal.dateTime.map {
-                formatDateTime(dateTime: $0)
-            }
+            dateTimeTextField.text = meal.formattedDate()
             noteTextView.text = meal.note
             if let lat = meal.latitude, let lon = meal.longitude {
                 let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -111,12 +110,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             m.photo = photo
             m.rating = rating
             m.dateTime = dateTimeTextField.text.flatMap {
-                dateFormatter().date(from: $0)
+                DateTimeFormatter.date(from: $0)
                 } ?? nil
             m.note = note
         } else {
             os_log("Creating Meal", log: OSLog.default, type: .debug)
-            let dateTime = dateTimeTextField.text.flatMap({ dateFormatter().date(from: $0) })
+            let dateTime = dateTimeTextField.text.flatMap({ DateTimeFormatter.date(from: $0) })
             self.meal = Meal(name: name, photo: photo, rating: rating, dateTime: dateTime, note: note, model: nil)
         }
         meal?.latitude = pin?.coordinate.latitude
@@ -166,11 +165,11 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
 
     @objc func dateTimeValueChanged(datePicker: UIDatePicker) {
-        dateTimeTextField.text = formatDateTime(dateTime: datePicker.date)
+        dateTimeTextField.text = DateTimeFormatter.string(from: datePicker.date)
     }
     
     @objc func doneButtonTapped() {
-        dateTimeTextField.text = formatDateTime(dateTime: datePicker.date)
+        dateTimeTextField.text = DateTimeFormatter.string(from: datePicker.date)
         dateTimeTextField.resignFirstResponder()
     }
     
@@ -194,7 +193,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         datePicker.datePickerMode = .dateAndTime
         // datePicker.addTarget(self, action: #selector(MealViewController.dateTimeValueChanged(datePicker:)), for: .valueChanged)
         if let dateTime = dateTimeTextField.text {
-            dateFormatter().date(from: dateTime).map {
+            DateTimeFormatter.date(from: dateTime).map {
                 datePicker.date = $0
             }
         }
@@ -237,18 +236,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func updateSaveButtonState() {
         let text = nameTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty
-    }
-    
-    private func dateFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "ja_JP")
-        return formatter
-    }
-    
-    private func formatDateTime(dateTime: Date) -> String {
-        return dateFormatter().string(from: dateTime)
     }
     
     @objc func keyboardWillShow(notification: Notification) {

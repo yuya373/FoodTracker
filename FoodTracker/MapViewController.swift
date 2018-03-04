@@ -9,18 +9,30 @@
 import UIKit
 import MapKit
 
+class MealPointAnnotation: MKPointAnnotation {
+    var mealIndex: Int?
+    
+    override init() {
+        super.init()
+    }
+    
+    func setMeal(_ i: Int) {
+        self.mealIndex = i
+    }
+}
+
 class MapViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var mapView: MKMapView!
     var meals = [Meal]()
     var locationManager: CLLocationManager!
     var mapInitiallyLoaded = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        meals = Meal.load()
+        meals = Meal.load().filter({ $0.latitude != nil && $0.longitude != nil })
         
         locationManager = CLLocationManager()
         locationManager.allowsBackgroundLocationUpdates = false
@@ -29,7 +41,12 @@ class MapViewController: UIViewController {
         
         mapView.delegate = self
         
+
         showMeals()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,16 +67,15 @@ class MapViewController: UIViewController {
     
     // MARK: - Private Methods
     private func showMeals() {
-        let pins = meals.map { meal -> MKPointAnnotation? in
-            if let latitude = meal.latitude, let longitude = meal.longitude {
-                let pin = MKPointAnnotation()
-                pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                pin.title = meal.name
-                return pin
-            }
-            return nil
+        let pins = meals.enumerated().map { (index, meal) -> MKPointAnnotation in
+            let pin = MealPointAnnotation()
+            pin.coordinate = CLLocationCoordinate2D(latitude: meal.latitude!, longitude: meal.longitude!)
+            pin.title = meal.name
+            pin.subtitle = meal.note
+            pin.mealIndex = index
+            return pin
         }
-        mapView.addAnnotations(pins.flatMap({ $0 }))
+        mapView.addAnnotations(pins)
     }
 }
 
@@ -97,9 +113,25 @@ extension MapViewController: MKMapViewDelegate {
             pinView.annotation = annotation
             pinView.animatesDrop = true
             pinView.canShowCallout = true
+            let button = UIButton(type: .detailDisclosure)
+            pinView.rightCalloutAccessoryView = button
             return pinView
         } else {
             return nil
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let annotation = view.annotation as? MealPointAnnotation, let i = annotation.mealIndex {
+            let meal = self.meals[i]
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let id = "MapMealDetailViewController"
+            let mealViewController = storyboard.instantiateViewController(withIdentifier: id) as? MapMealDetailViewController
+            mealViewController.map {
+                $0.meal = meal
+                $0.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController($0, animated: true)
+            }
         }
     }
     

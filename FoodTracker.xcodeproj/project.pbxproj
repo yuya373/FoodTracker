@@ -15,6 +15,8 @@
 		6402A4782025A3BF00F403CA /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6402A4772025A3BF00F403CA /* FoodTrackerTests.swift */; };
 		645968DF204AB2F000EAA28B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645968DE204AB2F000EAA28B /* MapViewController.swift */; };
 		645968E1204AB7AC00EAA28B /* LocationManagerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645968E0204AB7AC00EAA28B /* LocationManagerUtil.swift */; };
+		645968E3204BEFB200EAA28B /* MapMealDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645968E2204BEFB200EAA28B /* MapMealDetailViewController.swift */; };
+		645968E5204C02F400EAA28B /* DateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645968E4204C02F400EAA28B /* DateTimeFormatter.swift */; };
 		649483552049B2EA0015E4E3 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649483542049B2EA0015E4E3 /* ListViewController.swift */; };
 		64B483C9203F198C00C291CD /* MealModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 64B483C7203F198C00C291CD /* MealModel.xcdatamodeld */; };
 		64EAC7252028CAD900A782C2 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAC7242028CAD900A782C2 /* RatingControl.swift */; };
@@ -46,6 +48,8 @@
 		6402A4792025A3BF00F403CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		645968DE204AB2F000EAA28B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		645968E0204AB7AC00EAA28B /* LocationManagerUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerUtil.swift; sourceTree = "<group>"; };
+		645968E2204BEFB200EAA28B /* MapMealDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMealDetailViewController.swift; sourceTree = "<group>"; };
+		645968E4204C02F400EAA28B /* DateTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeFormatter.swift; sourceTree = "<group>"; };
 		649483542049B2EA0015E4E3 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		64B483C8203F198C00C291CD /* Meal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Meal.xcdatamodel; sourceTree = "<group>"; };
 		64EAC7242028CAD900A782C2 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 		6402A4612025A3BE00F403CA /* FoodTracker */ = {
 			isa = PBXGroup;
 			children = (
+				645968E4204C02F400EAA28B /* DateTimeFormatter.swift */,
+				645968E2204BEFB200EAA28B /* MapMealDetailViewController.swift */,
 				645968E0204AB7AC00EAA28B /* LocationManagerUtil.swift */,
 				649483542049B2EA0015E4E3 /* ListViewController.swift */,
 				645968DE204AB2F000EAA28B /* MapViewController.swift */,
@@ -224,11 +230,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				64EAC727202B583900A782C2 /* Meal.swift in Sources */,
+				645968E5204C02F400EAA28B /* DateTimeFormatter.swift in Sources */,
 				6402A4652025A3BE00F403CA /* MealViewController.swift in Sources */,
 				64EAC7252028CAD900A782C2 /* RatingControl.swift in Sources */,
 				6402A4632025A3BE00F403CA /* AppDelegate.swift in Sources */,
 				645968DF204AB2F000EAA28B /* MapViewController.swift in Sources */,
 				649483552049B2EA0015E4E3 /* ListViewController.swift in Sources */,
+				645968E3204BEFB200EAA28B /* MapMealDetailViewController.swift in Sources */,
 				645968E1204AB7AC00EAA28B /* LocationManagerUtil.swift in Sources */,
 				64EAC72B202CAAD900A782C2 /* MealTableViewController.swift in Sources */,
 				64B483C9203F198C00C291CD /* MealModel.xcdatamodeld in Sources */,
