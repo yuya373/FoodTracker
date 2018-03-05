@@ -29,8 +29,11 @@ class MapMealDetailViewController: UIViewController {
             mealDateLabel.text = meal.formattedDate() ?? ""
         }
         
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        
     }
     
     override func didReceiveMemoryWarning() {
