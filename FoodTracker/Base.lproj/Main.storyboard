@@ -228,7 +228,7 @@
                                                     <constraint firstAttribute="width" constant="252" id="XAm-vI-j1m"/>
                                                 </constraints>
                                             </stackView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WRh-52-Ncp">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WRh-52-Ncp">
                                                 <rect key="frame" x="24" y="415.33333333333337" width="327" height="160"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
