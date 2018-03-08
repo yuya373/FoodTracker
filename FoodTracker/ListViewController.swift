@@ -64,6 +64,7 @@ class ListViewController: UIViewController {
                 meals.append(meal)
                 mealTableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            meal.save()
         }
     }
 

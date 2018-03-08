@@ -51,15 +51,19 @@ class Meal {
         }
     }
     
+    private static func delegate() -> AppDelegate {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("failed to fetch Delegate")
+        }
+        return delegate
+    }
+    
     static func fetchHasLocation() -> [Meal] {
         return fetch().filter({ $0.latitude != nil && $0.longitude != nil })
     }
     
     static func fetch() -> [Meal] {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("failed to fetch Delegate")
-        }
-        let context = delegate.persistentContainer.viewContext
+        let context = delegate().persistentContainer.viewContext
         do {
             let request: NSFetchRequest<MealModel> = MealModel.fetchRequest()
             let mealModels = try context.fetch(request)
@@ -104,11 +108,7 @@ class Meal {
         self.longitude = model.map { $0.longitude }
         self.latitude = model.map { $0.latitude }
 
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("failed to fetch Delegate")
-        }
-        
-        self.model = model ?? MealModel(context: delegate.persistentContainer.viewContext)
+        self.model = model ?? MealModel(context: Meal.delegate().persistentContainer.viewContext)
         initModel()
     }
     
@@ -124,13 +124,13 @@ class Meal {
 
     // MARK: Update MealModel
     
+    func save() {
+        Meal.delegate().saveContext()
+    }
+    
     func delete() {
-        let m = model
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("failed to fetch Delegate")
-        }
-        let context = delegate.persistentContainer.viewContext
-        context.delete(m)
+        let context = Meal.delegate().persistentContainer.viewContext
+        context.delete(self.model)
     }
     
     private func updateModelName() {
