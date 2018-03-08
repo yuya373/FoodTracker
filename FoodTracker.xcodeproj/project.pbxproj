@@ -23,7 +23,6 @@
 		64EAC7252028CAD900A782C2 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAC7242028CAD900A782C2 /* RatingControl.swift */; };
 		64EAC727202B583900A782C2 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAC726202B583900A782C2 /* Meal.swift */; };
 		64EAC729202CA4A000A782C2 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAC728202CA4A000A782C2 /* MealTableViewCell.swift */; };
-		64EAC72B202CAAD900A782C2 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAC72A202CAAD900A782C2 /* MealTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +56,6 @@
 		64EAC7242028CAD900A782C2 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		64EAC726202B583900A782C2 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		64EAC728202CA4A000A782C2 /* MealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
-		64EAC72A202CAAD900A782C2 /* MealTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +109,6 @@
 				64EAC726202B583900A782C2 /* Meal.swift */,
 				64B483C7203F198C00C291CD /* MealModel.xcdatamodeld */,
 				6402A4662025A3BE00F403CA /* Main.storyboard */,
-				64EAC72A202CAAD900A782C2 /* MealTableViewController.swift */,
 				64EAC728202CA4A000A782C2 /* MealTableViewCell.swift */,
 				6402A4692025A3BE00F403CA /* Assets.xcassets */,
 				6402A46B2025A3BE00F403CA /* LaunchScreen.storyboard */,
@@ -242,7 +239,6 @@
 				649483552049B2EA0015E4E3 /* ListViewController.swift in Sources */,
 				645968E3204BEFB200EAA28B /* MapMealDetailViewController.swift in Sources */,
 				645968E1204AB7AC00EAA28B /* LocationManagerUtil.swift in Sources */,
-				64EAC72B202CAAD900A782C2 /* MealTableViewController.swift in Sources */,
 				64B483C9203F198C00C291CD /* MealModel.xcdatamodeld in Sources */,
 				64EAC729202CA4A000A782C2 /* MealTableViewCell.swift in Sources */,
 			);
